@@ -1,38 +1,43 @@
 import numpy as np
-import scipy
 import matplotlib.pyplot as plt
 
-# Parameters:
-N = 1000
+def random_sequence():
+    a = np.random.uniform(low=-1, high=1, size=10000)
+    b = np.random.uniform(low=-1, high=1, size=10000)
+    y = a * b
 
-# Function to generate two independent random sequences and plot their histograms
-def random_sequence_with_plot():
-    # Generate 2 independent random sequences of length N
-    # Values are uniformly distributed between -1 and 1
-    a = np.random.uniform(-1, 1, N)
-    b = np.random.uniform(-1, 1, N)
+    hist_a, bins_a = np.histogram(a, 100)
+    hist_b, bins_b = np.histogram(b, 100)
+    hist_y, bins_y = np.histogram(y, 100)
 
-    # Plot histogram of the 1st random sequence (a[n])
-    plt.subplot(1, 2, 1)
-    plt.hist(a, bins=100, color='blue', alpha=0.7, label='a[n]')
-    plt.title('Histogram a[n]')
-    plt.xlabel('Value')
-    plt.ylabel('Frequency')
-    plt.legend()
+    center_a = (bins_a[:-1] + bins_a[1:]) * 0.5
+    pmf_a = hist_a / np.sum(hist_a)
 
-    # Plot histogram of the 2nd random sequence (b[n])
-    plt.subplot(1, 2, 2)
-    plt.hist(b, bins=100, color='orange', alpha=0.7, label='b[n]')
-    plt.title('Histogram b[n]')
-    plt.xlabel('Value')
-    plt.ylabel('Frequency')
-    plt.legend()
+    center_b = (bins_b[:-1] + bins_b[1:]) * 0.5
+    pmf_b = hist_b / np.sum(hist_b)
 
-    # Adjust layout and display the plots
+    center_y = (bins_y[:-1] + bins_y[1:]) * 0.5
+    pmf_y = hist_y / np.sum(hist_y)
+
+    # Plot histogram of a[n]
+    fig, axs = plt.subplots(1, 3)
+    axs[0].bar(center_a, pmf_a, width=(bins_a[1] - bins_a[0]), alpha=0.7)
+    axs[0].set_title('Histogram a[n]')
+    axs[0].set_xlabel('Value')
+    axs[0].set_ylabel('Frequency')
+
+    # Plot histogram of b[n]
+    axs[1].bar(center_b, pmf_b, width=(bins_b[1] - bins_b[0]), alpha=0.7)
+    axs[1].set_title('Histogram b[n]')
+    axs[1].set_xlabel('Value')
+    axs[1].set_ylabel('Frequency')
+
+    axs[2].bar(center_y, pmf_y, width=(bins_y[1] - bins_y[0]), alpha=0.7)
+    axs[2].set_title('Histogram y[n]')
+    axs[2].set_xlabel('Value')
+    axs[2].set_ylabel('Frequency')
+
     plt.tight_layout()
-    plt.show()
+    plt.savefig("hist_1.svg")
 
-    return a, b
-
-# Call the function to generate sequences and plot
-random_sequence_with_plot()
+random_sequence()
