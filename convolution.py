@@ -4,10 +4,20 @@ import matplotlib.pyplot as plt
 # Parameters:
 N = 101  # Length of triangular windows
 
-# Function to perform convolution
+# Function to perform convolution (no np.convolve used)
 def convolution(a, b):
-    # Manual implementation of convolution
-    y = np.convolve(a, b, mode='full')
+    # convolution itself
+    L_a = len(a)
+    L_b = len(b)
+    L_y = L_a + L_b - 1  # Length of the output signal
+    y = [0] * L_y
+
+    # convolution step by step
+    for n in range(L_y):
+        for k in range(L_a):
+            if 0 <= n - k < L_b:
+                y[n] += a[k] * b[n - k]
+    
     return y
 
 # Function to generate triangular windows and perform convolution
