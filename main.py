@@ -41,3 +41,23 @@ def random_sequence():
     plt.savefig("hist_1.svg")
 
 random_sequence()
+
+
+
+
+
+
+
+n_hops = signal_len // hop_size
+
+stft_output = np.zeros((n_hops, window_size // 2))
+
+for n in range(n_hops):
+    idx = n * hop_size
+    block = signal[idx:idx + window_size]
+    print(block.shape, win.shape)
+    block = block * win
+    block = np.fft.fft(block)
+    stft_output[n] = block[:window_size // 2]
+
+return stft_output
