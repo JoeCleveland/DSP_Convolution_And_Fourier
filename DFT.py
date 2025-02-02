@@ -19,20 +19,25 @@ def create_wav(signal_params, duration, sample_rate, filename):
 
 def DFT(filename):
     samplerate, data = scipy.io.wavfile.read(filename)
-    
+
+    # Pad data to the next power of 2
+    next_pow2 = int(2**np.ceil(np.log2(len(data))))
+    padded_data = np.pad(data, (0, next_pow2 - len(data)), mode='constant')
+    print(len(padded_data))
+    print(len(data))
+
     # perform fft
-    X = scipy.fft.fft(data)
+    X = scipy.fft.fft(padded_data)
     freqs = np.fft.fftfreq(len(data), 1 / SAMPLE_RATE)[:SAMPLE_RATE]
 
     # normalize the magnitude values to reflect the actual amplitude of the signal.
     z = np.abs(X)/len(data)
 
+    z[0] = 1e-10
+
     # convert to db scale
     z_db = 20*np.log10(z)
     z_db = z_db[:SAMPLE_RATE]  # limit length of signal to sample rate
-
-    # fix dc offset
-    z[0] = 1e-10
 
     # plot the
     plt.figure(figsize=(12, 6))
@@ -70,6 +75,20 @@ def DFT(filename):
     plt.ylabel("Phase (radians)")
     plt.savefig("section_2_phase_plot.png")
     print("saved the plot at: section_2_phase_plot.png")
+
+    # Unwrapped phase
+    phi_unwrapped = np.unwrap(phi)
+
+    plt.figure(figsize=(12, 6))
+    plt.plot(freqs, phi_unwrapped, label="Unwrapped Phase (radians)")
+
+    # Adding grid
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+    # Add labels and legend
+    plt.xlabel("Frequency (Hz)")
+    plt.ylabel("Unwrapped Phase (radians)")
+    plt.savefig("section_2_unwrapped_phase_plot.png")
+    print("saved the plot at: section_2_unwrapped_phase_plot.png")
 
 
 if __name__ == '__main__':
