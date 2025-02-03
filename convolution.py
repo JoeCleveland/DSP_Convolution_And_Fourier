@@ -26,15 +26,15 @@ def triangular_windows_and_convolution():
     a = np.array([1 - abs((i - (N - 1) / 2) / ((N - 1) / 2)) for i in range(N)])
     b = np.array([1 - abs((i - (N - 1) / 2) / ((N - 1) / 2)) for i in range(N)])
 
-    # FORMULA FOR THE REPORT: 
-    # w[n] = 1 − |n − (N − 1)/2| / ((N − 1)/2), where n = 0, 1, 2, ..., N − 1
+     # FORMULA FOR THE REPORT: 
+     # w[n] = 1 − |n − (N − 1)/2| / ((N − 1)/2), where n = 0, 1, 2, ..., N − 1
 
-    # Perform convolution
-    y = convolution(a, b)
+     Perform convolution
+     = convolution(a, b)
 
-    # FORMULA FOR THE REPORT:
-    # Convolution equation: y[n] = sum_{k=0}^{N_a-1} a[k] * b[n-k]
-    # Length of the output signal: L_y = N_a + N_b - 1
+     #FORMULA FOR THE REPORT:
+     #Convolution equation: y[n] = sum_{k=0}^{N_a-1} a[k] * b[n-k]
+     #Length of the output signal: L_y = N_a + N_b - 1
 
     # Plot the triangular windows and the result of the convolution
     plt.figure(figsize=(12, 8))
@@ -70,3 +70,17 @@ def triangular_windows_and_convolution():
 
 # Call the function to execute the task
 triangular_windows_and_convolution()
+
+
+
+# Interpretation of Results
+
+# 1. The first and second plots show the two identical triangular windows.
+# 2. The convolution result (third plot) resembles a **smoother, wider** triangular shape.
+# 3. This happens because convolving two signals is equivalent to **blurring** or **smoothing** their shape.
+#4. The length of the output signal is:
+
+# 
+# L_y = N_a + N_b - 1 = 101 + 101 - 1 = 201
+#
+# Thus, the convolution extends the signal's length and smooths its shape.
