@@ -1,8 +1,32 @@
-﻿import numpy as np
+# Convolution of Triangular Windows
+
+# Steps:
+# 1. Define the convolution function.
+# 2. Generate two triangular windows.
+# 3. Perform the convolution.
+# 4. Plot and interpret the results.
+
+
+# Convolution Equation:
+
+# y[n] = \sum_{k=0}^{N_a-1} a[k] \cdot b[n-k]
+
+# Triangular Window Equation:
+
+# w[n] = 1 - \frac{|n - (N - 1)/2|}{(N - 1)/2}, \quad \text{for } n = 0, 1, 2, ..., N - 1
+
+import numpy as np
 import matplotlib.pyplot as plt
 
 # Parameters:
 N = 101  # Length of triangular windows
+
+
+# Convolution Function
+# We manually implement the convolution operation as follows:
+# 1. Compute the output signal length:  
+#   L_y = N_a + N_b - 1
+# 2. Iterate over the indices and sum the element-wise multiplications.
 
 # Function to perform convolution (no np.convolve used)
 def convolution(a, b):
@@ -20,23 +44,26 @@ def convolution(a, b):
     
     return y
 
-# Function to generate triangular windows and perform convolution
+
+# Function to generate triangular windows and perform convolution.
+# We generate two identical triangular windows using the following formula:
+
+# w[n] = 1 - \frac{|n - (N - 1)/2|}{(N - 1)/2}
+
 def triangular_windows_and_convolution():
     # Generate two triangular windows
     a = np.array([1 - abs((i - (N - 1) / 2) / ((N - 1) / 2)) for i in range(N)])
     b = np.array([1 - abs((i - (N - 1) / 2) / ((N - 1) / 2)) for i in range(N)])
 
-     # FORMULA FOR THE REPORT: 
-     # w[n] = 1 − |n − (N − 1)/2| / ((N − 1)/2), where n = 0, 1, 2, ..., N − 1
 
-     Perform convolution
-     = convolution(a, b)
+     # Perform convolution: we now apply the convolution function to the generated windows.
+     y = convolution(a, b)
 
-     #FORMULA FOR THE REPORT:
-     #Convolution equation: y[n] = sum_{k=0}^{N_a-1} a[k] * b[n-k]
-     #Length of the output signal: L_y = N_a + N_b - 1
+    # Plot the results. We visualize:
 
-    # Plot the triangular windows and the result of the convolution
+# The first triangular window.
+# The second triangular window.
+# The result of their convolution.
     plt.figure(figsize=(12, 8))
 
     # Plot the first triangular window
