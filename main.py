@@ -259,12 +259,12 @@ def STFT(input, window_fn, window_size, hop_size):
 
     print("saved the STFT output")
 
+if __name__ == '__main__':
+    random_sequence()
 
-random_sequence()
+    convolution()
 
-convolution()
+    DFT()
 
-DFT()
-
-sr, signal = scipy.io.wavfile.read("audio/TwoNote_DPA_31.wav")
-STFT(signal, scipy.signal.windows.blackman, 2048, 1024)
+    sr, signal = scipy.io.wavfile.read("audio/TwoNote_DPA_31.wav")
+    STFT(signal, scipy.signal.windows.blackman, 2048, 1024)
